@@ -1,0 +1,26 @@
+FROM node:16-alpine
+WORKDIR '/app'
+COPY ./package.json ./
+RUN npm install
+COPY . .
+CMD ["npm", "run", "start"]
+
+
+#stage 1 - build
+FROM node:16-alpine as builder
+WORKDIR '/app'
+COPY ./package.json ./
+RUN npm install --legacy-peer-deps
+COPY . .
+RUN npm run build
+# /app/build will have all the stuff we care about
+
+#stage 2 - host
+FROM nginx
+EXPOSE 3000
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/build /usr/share/nginx/html
+#default cmd for nginx container starts nginx looking for content in the /usr/share/nginx/html area!
+
+# build with default multi-step "dockerfile" in pwd
+# docker build -t multipass . 
