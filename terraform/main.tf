@@ -238,20 +238,6 @@ resource "aws_elasticache_replication_group" "main" {
   }
 }
 
-resource "aws_elasticache_cluster" "main" {
-  cluster_id           = "redis-main"
-  # engine               = "redis"
-  # node_type            = "cache.t3.micro"
-  # num_cache_nodes      = 1
-  # parameter_group_name = "default.redis6.x"
-  # engine_version       = "6.2"
-  # port                 = 6379
-  # security_group_ids = [aws_security_group.allow_all_inside.id]
-  apply_immediately = true
-  replication_group_id = aws_elasticache_replication_group.main.id
-  # subnet_group_name = aws_elasticache_subnet_group.redis1.name
-}
-
 output "redis_endpoint" {
   value = aws_elasticache_replication_group.main.primary_endpoint_address
 }
