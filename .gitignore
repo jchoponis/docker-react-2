@@ -114,3 +114,6 @@ Thumbs.db
 *.app
 *.exe
 *.war
+
+.terraform.lock.hcl
+terraform.tfstate
