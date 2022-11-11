@@ -50,4 +50,5 @@ services:
     depends_on:
       - api
       - client
-    
+
+# pass in custom file name like `docker-compose -f docker-compose-dev.yml up --build`
